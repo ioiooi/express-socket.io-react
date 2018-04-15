@@ -1,28 +1,23 @@
 // express generator
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var sassMiddleware = require('node-sass-middleware');
-
-// webpack
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var compiler = webpack(webpackConfig);
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const sassMiddleware = require('node-sass-middleware');
 
 // routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -32,15 +27,24 @@ app.use(sassMiddleware({
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath
-}));
-app.use(express.static(path.join(__dirname, 'public')));
+
+if (process.env.NODE_ENV !== 'production') {
+  // webpack
+  const webpack = require('webpack');
+  const webpackConfig = require('./webpack.dev.js');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const compiler = webpack(webpackConfig);
+
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: webpackConfig.output.publicPath
+  }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 // setup routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/chat', chatRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
