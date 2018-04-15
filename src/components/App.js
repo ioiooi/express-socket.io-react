@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import socket from '../socket/socket';
+import { hot } from 'react-hot-loader';
 
 class App extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class App extends Component {
   }
   
   componentDidMount() {
-    socket.on('randomInt', data => this.setState({ data }))
+    socket.on('someEvent', data => this.setState({ data }))
   }
 
   render() {
@@ -23,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(module)(App);
