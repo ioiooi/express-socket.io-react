@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "prod": "npm run build && NODE_ENV=production node ./bin/www",
     "winprod": "npm run build && set NODE_ENV=production&& node ./bin/www",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "postinstall": "npm run build && NODE_ENV=production"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
