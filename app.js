@@ -13,9 +13,8 @@ var webpackDevMiddleware = require('webpack-dev-middleware');
 var compiler = webpack(webpackConfig);
 
 // routes
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var chatRouter = require('./routes/chat');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 var app = express();
 
