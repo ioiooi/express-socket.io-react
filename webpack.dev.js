@@ -5,9 +5,7 @@ const webpack = require('webpack');
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: [
-    'webpack-hot-middleware/client'
-  ],
+  entry: ['webpack-hot-middleware/client'],
   output: {
     publicPath: '/javascripts'
   },

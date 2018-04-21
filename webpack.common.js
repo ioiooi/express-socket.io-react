@@ -1,12 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  entry: [
-    './src/index.js',
-  ],
+  entry: ['./src/index.js'],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public/javascripts'),
+    path: path.resolve(__dirname, 'public/javascripts')
   },
   module: {
     rules: [
@@ -14,11 +12,11 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          { 
+          {
             loader: 'babel-loader'
           }
         ]
       }
     ]
   }
-}
+};

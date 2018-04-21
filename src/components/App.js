@@ -5,11 +5,11 @@ import { hot } from 'react-hot-loader';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: 0 }
+    this.state = { data: 0 };
   }
-  
+
   componentDidMount() {
-    socket.on('someEvent', data => this.setState({ data }))
+    socket.on('someEvent', data => this.setState({ data }));
   }
 
   render() {
